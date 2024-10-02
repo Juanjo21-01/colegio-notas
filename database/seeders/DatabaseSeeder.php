@@ -3,7 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Estudiante;
+use App\Models\Grado;
+use App\Models\AsignacionGradoEstudiante;
+use App\Models\Curso;
+use App\Models\AsignacionGradoCurso;
+use App\Models\Calificacion;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +18,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Roles
+        $this->call(RoleSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Usuarios
+        $this->call(UserAdminSeeder::class);
+        User::factory(10)->create();
+
+        // Estudiantes
+        Estudiante::factory(10)->create();
+
+        // Grados
+        $this->call(GradosSeeder::class);
+
+        // Asignacion de grados a estudiantes
+        AsignacionGradoEstudiante::factory(10)->create();
+
+        // Cursos
+        Curso::factory(10)->create();
+
+        // Asignacion de cursos a grados
+        AsignacionGradoCurso::factory(10)->create();
+
+        // Calificaciones
+        Calificacion::factory(10)->create();
     }
 }
