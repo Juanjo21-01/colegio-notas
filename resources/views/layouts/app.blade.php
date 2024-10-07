@@ -6,34 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Instituto @yield('title', ' ')</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <div>
+<body id="inicio">
+    <div id="wrapper">
+        <!-- Sidebar -->
         @include('layouts.navigation')
 
-        <!-- Page Heading -->
-        @isset($header)
-            <header>
-                <div>
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
+        <!-- Contenido de la pagina -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                @include('layouts.topbar')
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+                <!-- Contenido -->
+                <main class="container-fluid">
+                    {{ $slot }}
+                </main>
+            </div>
+        </div>
     </div>
+
+    <!-- Scroll -->
+    <a class="scroll-to-top rounded" href="#inicio">
+        <i class="bi bi-caret-up-fill"></i>
+    </a>
 </body>
 
 </html>

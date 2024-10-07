@@ -1,8 +1,10 @@
 <x-app-layout>
+    @section('title', '- Perfil')
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
+        <ol class="breadcrumb bg-white mb-0">
+            <li class="breadcrumb-item"><a href="{{ route('profile.edit') }}">Perfil</a></li>
+        </ol>
     </x-slot>
 
     <div class="py-12">
