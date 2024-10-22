@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -24,6 +26,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Validar si el usuario esta activo
+        $user = User::where('email', $request->email)->first();
+
+        if ($user && $user->estado == 'inactivo') {
+             throw ValidationException::withMessages([
+                'email' => __('Tu cuenta está deshabilitada. Contacta al administrador.'),
+            ]);
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();

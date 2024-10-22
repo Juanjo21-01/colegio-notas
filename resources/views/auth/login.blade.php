@@ -14,16 +14,18 @@
             <x-input-label for="email" :value="__('Correo Electrónico')" />
             <x-text-input id="email" type="email" name="email" :value="old('email')" required autofocus
                 autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            @error('email')
+                <x-input-error for="email">{{ $message }}</x-input-error>
+            @enderror
         </div>
 
         <!-- Contraseña -->
         <div class="mt-3 form-group">
             <x-input-label for="password" :value="__('Contraseña')" />
-
             <x-text-input id="password" type="password" name="password" required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            @error('password')
+                <x-input-error for="password">{{ $message }}</x-input-error>
+            @enderror
         </div>
 
         <!-- Recuerda me -->
