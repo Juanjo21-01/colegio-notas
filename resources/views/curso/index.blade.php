@@ -1,9 +1,9 @@
 <x-app-layout>
-    @section('title', '- Usuarios')
+    @section('title', '- Cursos')
 
     <x-slot name="header">
         <ol class="breadcrumb bg-white mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('usuarios.index') }}">Usuarios</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('cursos.index') }}">Cursos</a></li>
         </ol>
     </x-slot>
 
@@ -27,12 +27,12 @@
     {{-- Contenido --}}
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-content-center">
-            <h6 class="m-0 p-2 font-weight-bold text-primary">Información de los usuarios</h6>
-            <a href="{{ route('usuarios.create') }}" class="btn btn-primary btn-icon-split">
+            <h6 class="m-0 p-2 font-weight-bold text-primary">Información de los Cursos</h6>
+            <a href="{{ route('cursos.create') }}" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
-                    <i class="bi bi-person-plus-fill"></i>
+                    <i class="bi bi-journal-plus"></i>
                 </span>
-                <span class="text">Crear Nuevo Usuario</span>
+                <span class="text">Nuevo Curso</span>
             </a>
         </div>
         <div class="card-body">
@@ -41,90 +41,69 @@
                     <thead>
                         <tr>
                             <th class="px-4 py-2 col-1">No.</th>
-                            <th class="px-4 py-2 col-3">Nombre</th>
-                            <th class="px-4 py-2 col-2">Correo</th>
-                            <th class="px-4 py-2 col-1">DPI</th>
-                            <th class="px-4 py-2 col-1">Estado</th>
-                            <th class="px-4 py-2 col-1">Rol</th>
+                            <th class="px-4 py-2 col-6">Curso</th>
+                            <th class="px-4 py-2 col-2">Estado</th>
                             <th class="px-4 py-2 col-3">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (count($usuarios) == 0)
+                        @if (count($cursos) == 0)
                             <tr>
-                                <td class="border px-4 py-2 text-center" colspan="7">No hay usuarios registrados</td>
+                                <td class="border px-4 py-2 text-center" colspan="5">No hay cursos registrados</td>
                             </tr>
                         @endif
-                        @foreach ($usuarios as $usuario)
+                        @foreach ($cursos as $curso)
                             <tr>
-                                <td class="border px-4 py-2 col-1 align-middle">{{ $usuario->id }}</td>
-                                <td class="border px-4 py-2 col-3 align-middle">{{ $usuario->nombres }}
-                                    {{ $usuario->apellidos }}
-                                </td>
-                                <td class="border px-4 py-2 col-2 align-middle">{{ $usuario->email }}</td>
-                                <td class="border px-4 py-2 col-1 align-middle">{{ $usuario->dpi }}</td>
-                                <td class="border px-4 py-2 col-1 text-center align-middle">
-                                    @if ($usuario->estado == 'activo')
-                                        <a href="{{ route('usuarios.cambiar-estado', $usuario->id) }}"
-                                            class="btn text-white {{ $usuario->role->nombre == 'Administrador' ? 'disabled' : '' }}">
-                                            <span class="badge badge-success">Activo </span>
+                                <td class="border px-4 py-2 col-1 align-middle">{{ $curso->id }}</td>
+                                <td class="border px-4 py-2 col-6 align-middle">{{ $curso->nombre }} </td>
+                                <td class="border px-4 py-2 col-2 text-center align-middle">
+                                    @if ($curso->estado == 'activo')
+                                        <a href="{{ route('cursos.cambiar-estado', $curso->id) }}"
+                                            class="btn text-white">
+                                            <span class="badge badge-success px-3 py-2">Activo </span>
                                         </a>
                                     @else
-                                        <a href="{{ route('usuarios.cambiar-estado', $usuario->id) }}"
-                                            class="text-white">
-                                            <span class="badge badge-danger">
+                                        <a href="{{ route('cursos.cambiar-estado', $curso->id) }}" class="text-white">
+                                            <span class="badge badge-danger px-3 py-2">
                                                 Inactivo
                                             </span>
                                         </a>
                                     @endif
-
                                 </td>
-                                <td class="border px-4 py-2 col-1 align-middle">{{ $usuario->role->nombre }}</td>
                                 <td class="border px-4 py-2 col-3 align-middle text-center">
-                                    <a href="{{ route('usuarios.show', $usuario->id) }}"
+                                    <a href="{{ route('cursos.show', $curso->id) }}"
                                         class="btn btn-info bg-gradient-info"><i class="bi bi-eye"></i></a>
-                                    <a href="{{ route('usuarios.edit', $usuario->id) }}"
+                                    <a href="{{ route('cursos.edit', $curso->id) }}"
                                         class="btn btn-warning bg-gradient-warning"><i class="bi bi-pencil"></i></a>
-                                    <a type="button"
-                                        class="btn btn-danger bg-gradient-danger {{ $usuario->role->nombre == 'Administrador' ? 'disabled' : '' }}"
-                                        data-bs-toggle="modal" data-bs-target="#eliminar-usuario-{{ $usuario->id }}">
+                                    <a type="button" class="btn btn-danger bg-gradient-danger " data-bs-toggle="modal"
+                                        data-bs-target="#eliminar-curso-{{ $curso->id }}">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
                             </tr>
-                            <div class="modal fade" id="eliminar-usuario-{{ $usuario->id }}" data-bs-backdrop="static"
+                            <div class="modal fade" id="eliminar-curso-{{ $curso->id }}" data-bs-backdrop="static"
                                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
-                                    <form method="post" action="{{ route('usuarios.destroy', $usuario->id) }}">
+                                    <form method="post" action="{{ route('cursos.destroy', $curso->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h1 class="modal-title text-danger text-lg" id="staticBackdropLabel">
-                                                    ¿Está seguro de que desea eliminar al usuario:
-                                                    {{ $usuario->nombres }} {{ $usuario->apellidos }}?
+                                                    ¿Está seguro de que desea eliminar el curso:
+                                                    {{ $curso->nombre }} ?
                                                 </h1>
                                                 <button type="button" class="btn " data-bs-dismiss="modal"
                                                     aria-label="Close"><i class="bi bi-x-lg"></i></button>
                                             </div>
                                             <div class="modal-body">
                                                 <p class="text-danger-emphasis">
-                                                    {{ __('Una vez que se elimine al usuario, todos sus recursos y datos se eliminarán permanentemente. ') }}
+                                                    {{ __('Una vez que se elimine el curso, todos sus recursos y datos se eliminarán permanentemente. ') }}
                                                 </p>
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item">
-                                                        <strong>Nombre:</strong> {{ $usuario->nombres }}
-                                                        {{ $usuario->apellidos }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong>Correo:</strong> {{ $usuario->email }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong>Rol:</strong> {{ $usuario->role->nombre }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong>DPI:</strong> {{ $usuario->dpi }}
+                                                        <strong>Nombre:</strong> {{ $curso->nombre }}
                                                     </li>
                                                 </ul>
 
@@ -133,7 +112,7 @@
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancelar</button>
                                                 <button type="submit" class="btn btn-danger bg-gradient">
-                                                    {{ __('Eliminar usuario') }}</button>
+                                                    {{ __('Eliminar curso') }}</button>
                                             </div>
                                         </div>
                                     </form>

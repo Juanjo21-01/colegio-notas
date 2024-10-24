@@ -3,8 +3,8 @@
 
     <x-slot name="header">
         <ol class="breadcrumb bg-white mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('usuarios.index') }}">usuarios</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('usuarios.create') }}">crear</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('usuarios.index') }}">Usuarios</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('usuarios.create') }}">Crear</a></li>
         </ol>
     </x-slot>
 

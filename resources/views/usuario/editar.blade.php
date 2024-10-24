@@ -3,8 +3,8 @@
 
     <x-slot name="header">
         <ol class="breadcrumb bg-white mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('usuarios.index') }}">usuarios</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('usuarios.create') }}">editar</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('usuarios.index') }}">Usuarios</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('usuarios.create') }}">Editar</a></li>
         </ol>
     </x-slot>
 
@@ -117,7 +117,7 @@
             <div class="d-flex justify-content-center pt-4">
                 <a href="{{ route('usuarios.index') }}" class="btn btn-danger mr-4"><i class="bi bi-x-lg"></i>
                     Cancelar</a>
-                <x-primary-button><i class="bi bi-box-arrow-up"></i> Registrar </x-primary-button>
+                <x-primary-button><i class="bi bi-box-arrow-up"></i> Actualizar </x-primary-button>
             </div>
         </form>
     </div>

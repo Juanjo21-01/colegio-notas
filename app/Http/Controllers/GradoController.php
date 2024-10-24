@@ -3,63 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grado;
+use App\Models\AsignacionGradoEstudiante;
 use Illuminate\Http\Request;
 
 class GradoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Vista de grados
     public function index()
     {
-        //
+        $grados = Grado::all();
+        return view('grado.index', compact('grados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    // Ver grados
     public function show(Grado $grado)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Grado $grado)
+    // Cambiar estado de un grado
+    public function cambiarEstado(string $id)
     {
-        //
-    }
+        try {
+            // Cambiar estado de grado
+            $grado = Grado::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Grado $grado)
-    {
-        //
-    }
+            if ($grado->estado == 'activo') {
+                $grado->estado = 'inactivo';
+            } else {
+                $grado->estado = 'activo';
+            }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Grado $grado)
-    {
-        //
+            $grado->save();
+
+            // Redireccionar a la vista de grados
+            return redirect()->route('grados.index')->with('success', 'Estado del grado actualizado correctamente');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Ocurrió un error al cambiar el estado del grado');
+        }
     }
 }

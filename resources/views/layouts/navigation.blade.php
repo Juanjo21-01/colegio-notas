@@ -51,6 +51,12 @@
     <div class="sidebar-heading">
         Grados
     </div>
+    <li class="nav-item {{ request()->routeIs('grados.index') ? 'active' : '' }}">
+        <a class="nav-link pt-2" href="{{ route('grados.index') }}">
+            <i class="bi bi-x-diamond"></i>
+            <span>Inicio</span>
+        </a>
+    </li>
     <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
         <a class="nav-link pt-2" data-bs-toggle="collapse" href="#collapseCursos" aria-expanded="true"
             aria-controls="collapseCursos">
@@ -83,6 +89,17 @@
     </li>
 
     <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Cursos -->
+    <div class="sidebar-heading">
+        Cursos
+    </div>
+    <li class="nav-item {{ request()->routeIs('cursos.index') ? 'active' : '' }}">
+        <a class="nav-link pt-2" href="{{ route('cursos.index') }}">
+            <i class="bi bi-x-diamond"></i>
+            <span>Inicio</span>
+        </a>
+    </li>
 
     <!-- Calificaciones -->
     <div class="sidebar-heading">
