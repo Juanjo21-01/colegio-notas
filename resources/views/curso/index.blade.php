@@ -39,7 +39,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered max-w-full mt-2">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th class="px-4 py-2 col-1">No.</th>
                             <th class="px-4 py-2 col-6">Curso</th>
                             <th class="px-4 py-2 col-2">Estado</th>
@@ -58,8 +58,7 @@
                                 <td class="border px-4 py-2 col-6 align-middle">{{ $curso->nombre }} </td>
                                 <td class="border px-4 py-2 col-2 text-center align-middle">
                                     @if ($curso->estado == 'activo')
-                                        <a href="{{ route('cursos.cambiar-estado', $curso->id) }}"
-                                            class="btn text-white">
+                                        <a href="{{ route('cursos.cambiar-estado', $curso->id) }}" class="text-white">
                                             <span class="badge badge-success px-3 py-2">Activo </span>
                                         </a>
                                     @else

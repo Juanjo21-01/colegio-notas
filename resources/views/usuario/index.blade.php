@@ -39,7 +39,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered max-w-full mt-2">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th class="px-4 py-2 col-1">No.</th>
                             <th class="px-4 py-2 col-3">Nombre</th>
                             <th class="px-4 py-2 col-2">Correo</th>
@@ -67,12 +67,12 @@
                                     @if ($usuario->estado == 'activo')
                                         <a href="{{ route('usuarios.cambiar-estado', $usuario->id) }}"
                                             class="btn text-white {{ $usuario->role->nombre == 'Administrador' ? 'disabled' : '' }}">
-                                            <span class="badge badge-success">Activo </span>
+                                            <span class="badge badge-success px-3 py-2">Activo </span>
                                         </a>
                                     @else
                                         <a href="{{ route('usuarios.cambiar-estado', $usuario->id) }}"
                                             class="text-white">
-                                            <span class="badge badge-danger">
+                                            <span class="badge badge-danger px-3 py-2">
                                                 Inactivo
                                             </span>
                                         </a>

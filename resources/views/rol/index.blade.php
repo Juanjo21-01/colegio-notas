@@ -15,7 +15,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered max-w-full mt-2">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th class="px-4 py-2 col-3">No.</th>
                             <th class="px-4 py-2 col-6">Nombre</th>
                             <th class="px-4 py-2 col-3">Acciones</th>

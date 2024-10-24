@@ -101,6 +101,21 @@
         </a>
     </li>
 
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Estudiantes -->
+    <div class="sidebar-heading">
+        Estudiantes
+    </div>
+    <li class="nav-item {{ request()->routeIs('estudiantes.index') ? 'active' : '' }}">
+        <a class="nav-link pt-2" href="{{ route('estudiantes.index') }}">
+            <i class="bi bi-x-diamond"></i>
+            <span>Inicio</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+
     <!-- Calificaciones -->
     <div class="sidebar-heading">
         Calificaciones
