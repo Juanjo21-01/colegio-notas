@@ -75,7 +75,7 @@
             </div>
         </div>
     </li>
-    <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->routeIs('grados-estudiantes.index') ? 'active' : '' }}">
         <a class="nav-link pt-2" data-bs-toggle="collapse" href="#collapseEstudiantes" aria-expanded="true"
             aria-controls="collapseEstudiantes">
             <i class="bi bi-person-square"></i>
@@ -84,9 +84,12 @@
         <div id="collapseEstudiantes" class="collapse" data-parent="#sidebarNav">
             <div class="card card-body py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Por grado:</h6>
-                <a class="collapse-item border-bottom-primary mb-1" href="{{ route('dashboard') }}">Primero</a>
-                <a class="collapse-item border-bottom-primary mb-1" href="{{ route('dashboard') }}">Segundo</a>
-                <a class="collapse-item border-bottom-primary" href="{{ route('dashboard') }}">Tercero</a>
+                <a class="collapse-item border-bottom-primary mb-1"
+                    href="{{ route('grados-estudiantes.index', ['grado' => 'primero']) }}">Primero</a>
+                <a class="collapse-item border-bottom-primary mb-1"
+                    href="{{ route('grados-estudiantes.index', ['grado' => 'segundo']) }}">Segundo</a>
+                <a class="collapse-item border-bottom-primary"
+                    href="{{ route('grados-estudiantes.index', ['grado' => 'tercero']) }}">Tercero</a>
             </div>
         </div>
     </li>

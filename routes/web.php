@@ -8,6 +8,7 @@ use App\Http\Controllers\GradoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\AsignacionGradoCursoController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\AsignacionGradoEstudianteController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function () {
     // Estudiantes
     Route::resource('estudiantes', EstudianteController::class)->names('estudiantes');
     Route::get('estudiantes/cambiar-estado/{id}', [EstudianteController::class, 'cambiarEstado'])->name('estudiantes.cambiar-estado');
+    // Asignaciones grados y estudiantes
+    Route::resource('grados-estudiantes', AsignacionGradoEstudianteController::class)->names('grados-estudiantes');
+    Route::get('grados-estudiantes/cambiar-estado/{id}', [AsignacionGradoEstudianteController::class, 'cambiarEstado'])->name('grados-estudiantes.cambiar-estado');
 });
 
 require __DIR__.'/auth.php';
