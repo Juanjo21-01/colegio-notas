@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('cursos', CursoController::class)->names('cursos');
     Route::get('cursos/cambiar-estado/{id}', [CursoController::class, 'cambiarEstado'])->name('cursos.cambiar-estado');
     // Asignaciones grados y cursos
-    Route::get('grados-cursos', [AsignacionGradoCursoController::class, 'index'])->name('grados-cursos.index');
+    Route::resource('grados-cursos', AsignacionGradoCursoController::class)->names('grados-cursos');
     Route::get('grados-cursos/cambiar-estado/{id}', [AsignacionGradoCursoController::class, 'cambiarEstado'])->name('grados-cursos.cambiar-estado');
     // Estudiantes
     Route::resource('estudiantes', EstudianteController::class)->names('estudiantes');

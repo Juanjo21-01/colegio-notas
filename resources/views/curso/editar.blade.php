@@ -4,7 +4,7 @@
     <x-slot name="header">
         <ol class="breadcrumb bg-white mb-0">
             <li class="breadcrumb-item"><a href="{{ route('cursos.index') }}">Cursos</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('cursos.create') }}">Editar</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('cursos.edit', $curso->id) }}">Editar</a></li>
         </ol>
     </x-slot>
 
