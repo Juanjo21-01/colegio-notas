@@ -29,7 +29,6 @@ class UpdateUsuarioRequest extends FormRequest
                 'dpi' => ['required', 'string', 'max:13'],
                 'telefono' => ['required', 'string', 'max:8'],
                 'password' => ['required', 'string', 'max:255'],
-                'role_id' => ['required', 'integer', 'exists:roles,id'],
             ];
         } else {
             if ($this->filled('password') === null) {
@@ -39,7 +38,6 @@ class UpdateUsuarioRequest extends FormRequest
                     'email' => ['sometimes', 'string', 'email', 'max:255'],
                     'dpi' => ['sometimes', 'string', 'max:13'],
                     'telefono' => ['sometimes', 'string', 'max:8'],
-                    'role_id' => ['sometimes', 'integer', 'exists:roles,id'],
                 ];
             } else {
                 // ENCRIPTAR CONTRASEÑA
@@ -53,7 +51,6 @@ class UpdateUsuarioRequest extends FormRequest
                     'dpi' => ['sometimes', 'string', 'max:13'],
                     'telefono' => ['sometimes', 'string', 'max:8'],
                     'password' => ['sometimes', 'string', 'max:255'],
-                    'role_id' => ['sometimes', 'integer', 'exists:roles,id'],
                 ];
             }
         }

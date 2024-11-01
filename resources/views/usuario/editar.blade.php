@@ -63,22 +63,25 @@
                             @enderror
                         </div>
                         <!-- Rol ---->
-                        <div class="col">
-                            <x-input-label for="role_id"
-                                class="form-label
+                        {{-- ignorar si se esta editando el usuario con id 1 - administrador --}}
+                        @if ($usuario->id != 1)
+                            <div class="col">
+                                <x-input-label for="role_id"
+                                    class="form-label
                                 ">Rol</x-input-label>
-                            <select class="form-control" id="role_id" name="role_id">
-                                <option value="">Seleccione un rol</option>
-                                @foreach ($roles as $rol)
-                                    <option value="{{ $rol->id }}"
-                                        @if (old('role_id', $usuario->role_id) == $rol->id) selected @endif>
-                                        {{ $rol->nombre }}</option>
-                                @endforeach
-                            </select>
-                            @error('role_id')
-                                <x-input-error for="role_id">{{ $message }}</x-input-error>
-                            @enderror
-                        </div>
+                                <select class="form-control" id="role_id" name="role_id">
+                                    <option value="">Seleccione un rol</option>
+                                    @foreach ($roles as $rol)
+                                        <option value="{{ $rol->id }}"
+                                            @if (old('role_id', $usuario->role_id) == $rol->id) selected @endif>
+                                            {{ $rol->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role_id')
+                                    <x-input-error for="role_id">{{ $message }}</x-input-error>
+                                @enderror
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

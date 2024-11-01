@@ -23,24 +23,24 @@ class DatabaseSeeder extends Seeder
 
         // Usuarios
         $this->call(UserAdminSeeder::class);
-        User::factory(10)->create();
+        // User::factory(10)->create();
 
         // Estudiantes
-        Estudiante::factory(10)->create();
+        // Estudiante::factory(10)->create();
 
         // Grados
         $this->call(GradosSeeder::class);
 
         // Asignacion de grados a estudiantes
-        AsignacionGradoEstudiante::factory(10)->create();
+        // AsignacionGradoEstudiante::factory(10)->create();
 
         // Cursos
-        Curso::factory(10)->create();
+        // Curso::factory(10)->create();
 
         // Asignacion de cursos a grados
-        AsignacionGradoCurso::factory(10)->create();
+        // AsignacionGradoCurso::factory(10)->create();
 
         // Calificaciones
-        Calificacion::factory(10)->create();
+        // Calificacion::factory(10)->create();
     }
 }

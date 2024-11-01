@@ -42,8 +42,8 @@
                         <tr class="text-center">
                             <th class="px-4 py-2 col-1">No.</th>
                             <th class="px-4 py-2 col-2">Grado</th>
-                            <th class="px-4 py-2 col-4">Curso</th>
-                            <th class="px-4 py-2 col-2">Profesor Asignado</th>
+                            <th class="px-4 py-2 col-3">Curso</th>
+                            <th class="px-4 py-2 col-3">Profesor Asignado</th>
                             <th class="px-4 py-2 col-1">Estado</th>
                             <th class="px-4 py-2 col-2">Acciones</th>
                         </tr>
@@ -61,8 +61,8 @@
                                 <td class="border px-4 py-2 col-1 align-middle text-center">{{ $gradoCurso->id }}</td>
                                 <td class="border px-4 py-2 col-2 align-middle">{{ $gradoCurso->grado->nombre }}
                                     "{{ $gradoCurso->grado->seccion }}"</td>
-                                <td class="border px-4 py-2 col-4 align-middle">{{ $gradoCurso->curso->nombre }} </td>
-                                <td class="border px-4 py-2 col-2 align-middle"> {{ $gradoCurso->user->nombres }}
+                                <td class="border px-4 py-2 col-3 align-middle">{{ $gradoCurso->curso->nombre }} </td>
+                                <td class="border px-4 py-2 col-3 align-middle"> {{ $gradoCurso->user->nombres }}
                                     {{ $gradoCurso->user->apellidos }}
                                 <td class="border px-4 py-2 col-1 text-center align-middle">
                                     @if ($gradoCurso->estado == 'activo')
