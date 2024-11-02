@@ -9,6 +9,7 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\AsignacionGradoCursoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\AsignacionGradoEstudianteController;
+use App\Http\Controllers\CalificacionController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
     // Asignaciones grados y estudiantes
     Route::resource('grados-estudiantes', AsignacionGradoEstudianteController::class)->names('grados-estudiantes');
     Route::get('grados-estudiantes/cambiar-estado/{id}', [AsignacionGradoEstudianteController::class, 'cambiarEstado'])->name('grados-estudiantes.cambiar-estado');
+    // Calificaciones
+    Route::resource('calificaciones', CalificacionController::class)->names('calificaciones');
+    Route::get('calificaciones/cambiar-estado/{id}', [CalificacionController::class, 'cambiarEstado'])->name('calificaciones.cambiar-estado');
 });
 
 require __DIR__.'/auth.php';

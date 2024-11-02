@@ -63,8 +63,9 @@
                                 <td class="border px-4 py-2 col-2 align-middle">{{ $gradoEstudiante->grado->nombre }}
                                     "{{ $gradoEstudiante->grado->seccion }}"</td>
                                 <td class="border px-4 py-2 col-4 align-middle">
-                                    {{ $gradoEstudiante->estudiante->nombres }}
-                                    {{ $gradoEstudiante->estudiante->apellidos }}</td>
+                                    {{ $gradoEstudiante->estudiante->codigo_personal }} -
+                                    {{ $gradoEstudiante->estudiante->apellidos }},
+                                    {{ $gradoEstudiante->estudiante->nombres }}</td>
                                 <td class="border px-4 py-2 col-2 align-middle"> {{ $gradoEstudiante->user->nombres }}
                                     {{ $gradoEstudiante->user->apellidos }}
                                 <td class="border px-4 py-2 col-1 text-center align-middle">
@@ -121,7 +122,8 @@
                                                         "{{ $gradoEstudiante->grado->seccion }}"
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <strong>Estudiante:</strong> {{ $gradoEstudiante->estudiante->nombres }}
+                                                        <strong>Estudiante:</strong>
+                                                        {{ $gradoEstudiante->estudiante->nombres }}
                                                         {{ $gradoEstudiante->estudiante->apellidos }}
                                                     </li>
                                                     <li class="list-group-item">
