@@ -74,14 +74,23 @@
                                                                 {{ $gradoCurso->grado->asignacionGradoEstudiantes->count() }}
                                                             </p>
                                                         </div>
-                                                        <div class="d-flex justify-content-center align-items-center">
-                                                            <a href="{{ route('calificaciones.create', ['gradoCurso' => $gradoCurso->id]) }}"
-                                                                class="btn btn-success btn-sm mr-1"> <i
-                                                                    class="bi bi-plus-lg"></i>
-                                                                Ingresar Notas
-                                                            </a>
+                                                        <div
+                                                            class="d-flex flex-column justify-content-center align-items-center">
+                                                            <div
+                                                                class="d-flex justify-content-center align-items-center">
+                                                                <a href="{{ route('calificaciones.create', ['gradoCurso' => $gradoCurso->id]) }}"
+                                                                    class="btn btn-success mr-1"> <i
+                                                                        class="bi bi-plus-lg"></i>
+                                                                    Ingresar
+                                                                </a>
+                                                                <a href="{{ route('calificaciones.edit', $gradoCurso->id) }}"
+                                                                    class="btn btn-secondary m-1"> <i
+                                                                        class="bi bi-pencil"></i>
+                                                                    Editar
+                                                                </a>
+                                                            </div>
                                                             <a href="{{ route('calificaciones.show', $gradoCurso->id) }}"
-                                                                class="btn btn-primary btn-sm"> <i
+                                                                class="btn btn-primary "> <i
                                                                     class="bi bi-eye"></i>
                                                                 Ver Calificaciones
                                                             </a>

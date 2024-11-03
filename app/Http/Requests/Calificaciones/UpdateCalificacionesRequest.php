@@ -16,10 +16,10 @@ class UpdateCalificacionesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'grado_curso_id' => 'required|exists:asignacion_grado_curso,id',
+            'grado_curso_id' => 'required|exists:asignacion_grado_cursos,id',
             'unidad' => 'required|string',
             'calificaciones' => 'required|array',
-            'calificaciones.*.estudiante_id' => 'required|exists:asignacion_grado_estudiante,estudiante_id',
+            'calificaciones.*.estudiante_id' => 'required|exists:asignacion_grado_estudiantes,estudiante_id',
             'calificaciones.*.nota' => 'required|numeric|min:0|max:100',
         ];
     }

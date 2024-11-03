@@ -73,7 +73,7 @@
                                 @foreach ($estudiantes as $estudiante)
                                     <tr>
                                         <td class="border px-3 py-1 col-1 align-middle text-center">
-                                            {{ $estudiante->id }}
+                                            {{ $loop->iteration }}
                                         </td>
                                         <td class="border px-3 py-1 col-2 align-middle text-center">
                                             {{ $estudiante->estudiante->codigo_personal }}
