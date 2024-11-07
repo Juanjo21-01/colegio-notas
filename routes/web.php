@@ -10,6 +10,7 @@ use App\Http\Controllers\AsignacionGradoCursoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\AsignacionGradoEstudianteController;
 use App\Http\Controllers\CalificacionController;
+use App\Http\Controllers\PDFController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -41,8 +42,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('grados-estudiantes', AsignacionGradoEstudianteController::class)->names('grados-estudiantes');
     Route::get('grados-estudiantes/cambiar-estado/{id}', [AsignacionGradoEstudianteController::class, 'cambiarEstado'])->name('grados-estudiantes.cambiar-estado');
     // Calificaciones
-    Route::resource('calificaciones', CalificacionController::class)->names('calificaciones');
-    Route::get('calificaciones/cambiar-estado/{id}', [CalificacionController::class, 'cambiarEstado'])->name('calificaciones.cambiar-estado');
+    Route::resource('calificaciones/cursos', CalificacionController::class)->names('calificaciones.cursos');
+    Route::get('calificaciones/cursos/cambiar-estado/{id}', [CalificacionController::class, 'cambiarEstado'])->name('calificaciones.cursos.cambiar-estado');
+    // Calificaciones por estudiantes
+    Route::get('calificaciones/estudiantes', [CalificacionController::class, 'inicioEstudiantes'])->name('calificaciones.estudiantes');
+    Route::get('calificaciones/estudiantes/{id}', [CalificacionController::class, 'notasEstudiantes'])->name('calificaciones.estudiantes.notas');
+    Route::get('calificaciones/estudiantes/{idGrado}/notas/{idEstudiante}', [CalificacionController::class, 'notaEstudiante'])->name('calificaciones.estudiantes.notas.show');
+    // PDF
+    Route::get('calificaciones/pdf/curso/{id}', [PDFController::class, 'calificacionesPorCurso'])->name('calificaciones.pdf.curso');
+    Route::get('calificaciones/pdf/grado/{id}', [PDFController::class, 'calificacionesPorGrado'])->name('calificaciones.pdf.grado');
+    Route::get('calificaciones/pdf/{idGrado}/estudiante/{idEstudiante}', [PDFController::class, 'calificacionesPorEstudiante'])->name('calificaciones.pdf.estudiante');
 });
 
 require __DIR__.'/auth.php';

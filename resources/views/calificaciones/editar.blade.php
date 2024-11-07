@@ -3,8 +3,8 @@
 
     <x-slot name="header">
         <ol class="breadcrumb bg-white mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('calificaciones.index') }}">Calificaciones</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('calificaciones.edit', $gradoCurso->id) }}">Editar
+            <li class="breadcrumb-item"><a href="{{ route('calificaciones.cursos.index') }}">Calificaciones</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('calificaciones.cursos.edit', $gradoCurso->id) }}">Editar
                     {{ $gradoCurso->grado->nombre }}
                     "{{ $gradoCurso->grado->seccion }}" - {{ $gradoCurso->curso->nombre }}</a></li>
         </ol>
@@ -25,7 +25,7 @@
 
         {{-- Formulario para editar calificaciones --}}
         <div class="card shadow mb-4">
-            <form method="POST" action="{{ route('calificaciones.update', $gradoCurso->id) }}">
+            <form method="POST" action="{{ route('calificaciones.cursos.update', $gradoCurso->id) }}">
                 @csrf
                 @method('PATCH')
                 <div class="card-header d-flex justify-content-between">
@@ -108,7 +108,7 @@
 
                         {{-- Regresar --}}
                         <div class="d-flex justify-content-center pt-4">
-                            <a href="{{ route('calificaciones.index') }}" class="btn btn-danger mr-4"><i
+                            <a href="{{ route('calificaciones.cursos.index') }}" class="btn btn-danger mr-4"><i
                                     class="bi bi-arrow-left"></i>
                                 Regresar</a>
                             <x-primary-button><i class="bi bi-box-arrow-up"></i> Editar Calificaciones

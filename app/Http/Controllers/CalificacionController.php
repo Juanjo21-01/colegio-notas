@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Calificacion;
 use App\Models\AsignacionGradoCurso;
 use App\Models\AsignacionGradoEstudiante;
+use App\Models\Grado;
+use App\Models\Curso;
+use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use App\Http\Requests\Calificaciones\StoreCalificacionesRequest;
 use App\Http\Requests\Calificaciones\UpdateCalificacionesRequest;
 
 class CalificacionController extends Controller
 {
-    // Vista de calificaciones
+    // Vista de calificaciones por grado y curso
     public function index(Request $request)
     {
         $grado = $request->grado;
@@ -38,6 +41,22 @@ class CalificacionController extends Controller
 
         return view('calificaciones.index', compact('gradosCursos', 'grado'));
     }
+
+    // Vista de calificaciones por grados y estudiantes
+    public function inicioEstudiantes(Request $request)
+    {
+        $grado = $request->grado;
+
+
+        // Obtener los grados filtrados por el parámetro 'grado' si está presente, de lo contrario obtener todos los grados
+        $grados = Grado::where('estado', 1)
+        ->when($grado, function ($query, $grado) {
+            return $query->where('nombre', $grado);
+        })
+        ->get();
+        return view('calificaciones.estudiantes', compact('grados', 'grado'));
+    }
+
 
     // Crear calificaciones
     public function create(Request $request)
@@ -71,7 +90,7 @@ class CalificacionController extends Controller
                 ->first();
 
                 if ($calificacionExistente) {
-                return redirect()->route('calificaciones.index')->with('error', 'Ya existe una calificación para el estudiante: ' . $calificacionExistente->estudiante->apellidos . ', '. $calificacionExistente->estudiante->nombres . ' en la unidad ' . $unidad . '.');
+                return redirect()->route('calificaciones.cursos.index')->with('error', 'Ya existe una calificación para el estudiante: ' . $calificacionExistente->estudiante->apellidos . ', '. $calificacionExistente->estudiante->nombres . ' en la unidad ' . $unidad . '.');
             }
 
             try {
@@ -88,10 +107,10 @@ class CalificacionController extends Controller
         }
 
         $gradoCurso = AsignacionGradoCurso::find($gradoCursoId);
-        return redirect()->route('calificaciones.index', ['grado' => $gradoCurso->grado->nombre])->with('success', 'Calificaciones de: ' . $gradoCurso->grado->nombre . ' "'.$gradoCurso->grado->seccion.'" - ' . $gradoCurso->curso->nombre . ' - Unidad ' . $unidad . ' guardadas correctamente.');
+        return redirect()->route('calificaciones.cursos.index', ['grado' => $gradoCurso->grado->nombre])->with('success', 'Calificaciones de: ' . $gradoCurso->grado->nombre . ' "'.$gradoCurso->grado->seccion.'" - ' . $gradoCurso->curso->nombre . ' - Unidad ' . $unidad . ' guardadas correctamente.');
     }
 
-    // Mostrar calificaciones
+    // Mostrar calificaciones del grado y curso
     public function show(string $id)
     {
         // Buscar las calificaciones del grado y curso
@@ -134,6 +153,61 @@ class CalificacionController extends Controller
         }
 
         return view('calificaciones.mostrar', compact('calificacionesPorEstudiante', 'gradoCurso'));
+    }
+
+    // Mostrar calificaciones por grado y estudiantes
+    public function notasEstudiantes(string $id){
+        $grado = Grado::find($id);
+
+        // Buscar los estudiantes asignados al grado que estén activos
+        $asignacionEstudiantes = AsignacionGradoEstudiante::where('grado_id', $id)
+            ->where('estado', 1)
+            ->get();
+        return view('calificaciones.notas', compact('grado', 'asignacionEstudiantes'));
+    }
+
+    // Mostrar calificaciones por estudiante
+    public function notaEstudiante(string $idGrado, string $idEstudiante)
+    {
+        // Buscar el grado y el estudiante
+        $grado = Grado::find($idGrado);
+        $estudiante = Estudiante::find($idEstudiante);
+
+        // Obtener todos los cursos del grado
+        $cursos = AsignacionGradoCurso::where('grado_id', $idGrado)->get();
+
+        // Obtener las calificaciones del estudiante por curso
+        $calificaciones = Calificacion::where('estudiante_id', $idEstudiante)
+            ->whereIn('asignacion_grado_curso_id', $cursos->pluck('id'))
+            ->get();
+
+        // Agrupar las calificaciones por curso
+        $calificacionesPorCurso = [];
+
+        // Recorrer los cursos y agrupar las calificaciones
+        foreach ($cursos as $curso) {
+            $calificacionesPorCurso[$curso->curso->nombre] = [
+                'curso' => $curso->curso->nombre,
+                'calificaciones' => [
+                    'I' => is_numeric($calI = $calificaciones->where('asignacion_grado_curso_id', $curso->id)->where('unidad', 'I')->first()->nota ?? '-') ? floatval($calI) : '-',
+                    'II' => is_numeric($calII = $calificaciones->where('asignacion_grado_curso_id', $curso->id)->where('unidad', 'II')->first()->nota ?? '-') ? floatval($calII) : '-',
+                    'III' => is_numeric($calIII = $calificaciones->where('asignacion_grado_curso_id', $curso->id)->where('unidad', 'III')->first()->nota ?? '-') ? floatval($calIII) : '-',
+                    'IV' => is_numeric($calIV = $calificaciones->where('asignacion_grado_curso_id', $curso->id)->where('unidad', 'IV')->first()->nota ?? '-') ? floatval($calIV) : '-',
+                ],
+                'totalNotas' => $calificaciones->where('asignacion_grado_curso_id', $curso->id)->sum('nota'),
+                'cantidadNotas' => $calificaciones->where('asignacion_grado_curso_id', $curso->id)->count(),
+            ];
+        }
+        // Calcular promedios
+        foreach ($calificacionesPorCurso as &$curso) {
+            $curso['promedio'] = $curso['cantidadNotas'] > 0 ? round($curso['totalNotas'] / $curso['cantidadNotas']) : 0;
+        }
+
+        // total promedio
+        $totalPromedio = 0;
+        $totalCursos = count($calificacionesPorCurso);
+
+        return view('calificaciones.nota', compact('grado', 'estudiante', 'calificacionesPorCurso', 'totalPromedio', 'totalCursos'));
     }
 
     // Editar calificaciones
@@ -211,7 +285,7 @@ class CalificacionController extends Controller
         }
 
         $gradoCurso = AsignacionGradoCurso::find($gradoCursoId);
-        return redirect()->route('calificaciones.index', ['grado' => $gradoCurso->grado->nombre])->with('success', 'Calificaciones de: ' . $gradoCurso->grado->nombre . ' "'.$gradoCurso->grado->seccion.'" - ' . $gradoCurso->curso->nombre . ' - Unidad ' . $unidad . ' actualizadas correctamente.');
+        return redirect()->route('calificaciones.cursos.index', ['grado' => $gradoCurso->grado->nombre])->with('success', 'Calificaciones de: ' . $gradoCurso->grado->nombre . ' "'.$gradoCurso->grado->seccion.'" - ' . $gradoCurso->curso->nombre . ' - Unidad ' . $unidad . ' actualizadas correctamente.');
     }
 
 }

@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <ol class="breadcrumb bg-white mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('calificaciones.index') }}">Calificaciones</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('calificaciones.cursos.index') }}">Calificaciones</a></li>
         </ol>
     </x-slot>
 
@@ -28,7 +28,7 @@
 
         {{-- Titulo --}}
         @if (Auth::user()->role->nombre == 'Administrador' || Auth::user()->role->nombre == 'Secretaria')
-            <h1 class="text-primary font-weight-bold text-lg text-center">Cursos</h1>
+            <h1 class="text-primary font-weight-bold text-lg text-center text-uppercase">Cursos</h1>
         @elseif (Auth::user()->role->nombre == 'Profesor')
             <h1 class="text-primary font-weight-bold text-lg text-center">Cursos Asignados del Profesor:
                 {{ Auth::user()->nombres }}
@@ -78,20 +78,19 @@
                                                             class="d-flex flex-column justify-content-center align-items-center">
                                                             <div
                                                                 class="d-flex justify-content-center align-items-center">
-                                                                <a href="{{ route('calificaciones.create', ['gradoCurso' => $gradoCurso->id]) }}"
+                                                                <a href="{{ route('calificaciones.cursos.create', ['gradoCurso' => $gradoCurso->id]) }}"
                                                                     class="btn btn-success mr-1"> <i
                                                                         class="bi bi-plus-lg"></i>
                                                                     Ingresar
                                                                 </a>
-                                                                <a href="{{ route('calificaciones.edit', $gradoCurso->id) }}"
+                                                                <a href="{{ route('calificaciones.cursos.edit', $gradoCurso->id) }}"
                                                                     class="btn btn-secondary m-1"> <i
                                                                         class="bi bi-pencil"></i>
                                                                     Editar
                                                                 </a>
                                                             </div>
-                                                            <a href="{{ route('calificaciones.show', $gradoCurso->id) }}"
-                                                                class="btn btn-primary "> <i
-                                                                    class="bi bi-eye"></i>
+                                                            <a href="{{ route('calificaciones.cursos.show', $gradoCurso->id) }}"
+                                                                class="btn btn-primary "> <i class="bi bi-eye"></i>
                                                                 Ver Calificaciones
                                                             </a>
                                                         </div>

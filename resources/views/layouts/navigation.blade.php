@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="sidebarNav">
     <!-- Logo -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
-        <img src="/img/logo.png" alt="Fondo de la página" class="img-fluid pt-3" />
+        <img src="/img/logotipo.png" alt="Fondo de la página" class="img-fluid pt-3" width="80" />
     </a>
 
     <hr class="sidebar-divider mt-3">
@@ -126,7 +126,7 @@
     <div class="sidebar-heading">
         Calificaciones
     </div>
-    <li class="nav-item {{ request()->routeIs('calificaciones.index') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->routeIs('calificaciones.cursos.index') ? 'active' : '' }}">
         <a class="nav-link pt-2" data-bs-toggle="collapse" href="#collapseCalificacionG" aria-expanded="true"
             aria-controls="collapseCalificacionG">
             <i class="bi bi-building"></i>
@@ -136,15 +136,15 @@
             <div class="card card-body py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Por grado:</h6>
                 <a class="collapse-item border-bottom-primary mb-1"
-                    href="{{ route('calificaciones.index', ['grado' => 'primero']) }}">Primero</a>
+                    href="{{ route('calificaciones.cursos.index', ['grado' => 'primero']) }}">Primero</a>
                 <a class="collapse-item border-bottom-primary mb-1"
-                    href="{{ route('calificaciones.index', ['grado' => 'segundo']) }}">Segundo</a>
+                    href="{{ route('calificaciones.cursos.index', ['grado' => 'segundo']) }}">Segundo</a>
                 <a class="collapse-item border-bottom-primary"
-                    href="{{ route('calificaciones.index', ['grado' => 'tercero']) }}">Tercero</a>
+                    href="{{ route('calificaciones.cursos.index', ['grado' => 'tercero']) }}">Tercero</a>
             </div>
         </div>
     </li>
-    <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->routeIs('calificaciones.estudiantes') ? 'active' : '' }}">
         <a class="nav-link pt-2" data-bs-toggle="collapse" href="#collapseCalificacionE" aria-expanded="true"
             aria-controls="collapseCalificacionE">
             <i class="bi bi-person-lines-fill"></i>
@@ -153,9 +153,12 @@
         <div id="collapseCalificacionE" class="collapse" data-parent="#sidebarNav">
             <div class="card card-body py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Por grado:</h6>
-                <a class="collapse-item border-bottom-primary mb-1" href="{{ route('dashboard') }}">Primero</a>
-                <a class="collapse-item border-bottom-primary mb-1" href="{{ route('dashboard') }}">Segundo</a>
-                <a class="collapse-item border-bottom-primary" href="{{ route('dashboard') }}">Tercero</a>
+                <a class="collapse-item border-bottom-primary mb-1"
+                    href="{{ route('calificaciones.estudiantes', ['grado' => 'primero']) }}">Primero</a>
+                <a class="collapse-item border-bottom-primary mb-1"
+                    href="{{ route('calificaciones.estudiantes', ['grado' => 'segundo']) }}">Segundo</a>
+                <a class="collapse-item border-bottom-primary"
+                    href="{{ route('calificaciones.estudiantes', ['grado' => 'tercero']) }}">Tercero</a>
             </div>
         </div>
     </li>

@@ -26,7 +26,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-center pt-2">
-                                    <img src="/img/logo.png" alt="Fondo de la página" class="img-fluid" />
+                                    <img src="/img/logotipo.png" alt="Fondo de la página" class="img-fluid"
+                                        Width="50" />
                                 </div>
                                 <div class="px-5 pb-2">
                                     {{ $slot }}

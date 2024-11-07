@@ -3,9 +3,9 @@
 
     <x-slot name="header">
         <ol class="breadcrumb bg-white mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('calificaciones.index') }}">Calificaciones</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('calificaciones.cursos.index') }}">Calificaciones</a></li>
             <li class="breadcrumb-item"><a
-                    href="{{ route('calificaciones.show', $gradoCurso->id) }}">{{ $gradoCurso->grado->nombre }}
+                    href="{{ route('calificaciones.cursos.show', $gradoCurso->id) }}">{{ $gradoCurso->grado->nombre }}
                     "{{ $gradoCurso->grado->seccion }}" - {{ $gradoCurso->curso->nombre }}</a></li>
         </ol>
     </x-slot>
@@ -28,7 +28,8 @@
             <div class="card-header py-3 d-flex justify-content-between align-content-center">
                 <h6 class="m-0 p-2 font-weight-bold text-primary">Calificaciones del Curso:
                     {{ $gradoCurso->curso->nombre }}</h6>
-                <a href="#" class="btn btn-primary btn-icon-split">
+                <a href="{{ route('calificaciones.pdf.curso', $gradoCurso->id) }}" target="_blank"
+                    class="btn btn-primary btn-icon-split">
                     <span class="icon text-white-50">
                         <i class="bi bi-filetype-pdf"></i>
                     </span>
@@ -85,7 +86,7 @@
 
         {{-- Regresar --}}
         <div class="d-flex justify-content-center pt-4">
-            <a href="{{ route('calificaciones.index') }}" class="btn btn-danger mr-4"><i class="bi bi-arrow-left"></i>
+            <a href="{{ route('calificaciones.cursos.index') }}" class="btn btn-danger mr-4"><i class="bi bi-arrow-left"></i>
                 Regresar</a>
         </div>
     </div>

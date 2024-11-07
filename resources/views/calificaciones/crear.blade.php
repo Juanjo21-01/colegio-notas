@@ -3,9 +3,9 @@
 
     <x-slot name="header">
         <ol class="breadcrumb bg-white mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('calificaciones.index') }}">Calificaciones</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('calificaciones.cursos.index') }}">Calificaciones</a></li>
             <li class="breadcrumb-item"><a
-                    href="{{ route('calificaciones.create', ['gradoCurso' => $gradoCurso->id]) }}">{{ $gradoCurso->grado->nombre }}
+                    href="{{ route('calificaciones.cursos.create', ['gradoCurso' => $gradoCurso->id]) }}">{{ $gradoCurso->grado->nombre }}
                     "{{ $gradoCurso->grado->seccion }}" - {{ $gradoCurso->curso->nombre }}</a></li>
         </ol>
     </x-slot>
@@ -25,7 +25,7 @@
 
         {{-- Formulario para guardar calificaciones --}}
         <div class="card shadow mb-4">
-            <form action="{{ route('calificaciones.store') }}" method="POST">
+            <form action="{{ route('calificaciones.cursos.store') }}" method="POST">
                 @csrf
                 <div class="card-header d-flex justify-content-between">
                     <h6 class="m-0 p-2 font-weight-bold text-primary">Selecciona la unidad y escribe la nota para cada
@@ -109,7 +109,7 @@
 
                         {{-- Botón de guardado --}}
                         <div class="d-flex justify-content-center pt-4">
-                            <a href="{{ route('calificaciones.index') }}" class="btn btn-danger mr-4"><i
+                            <a href="{{ route('calificaciones.cursos.index') }}" class="btn btn-danger mr-4"><i
                                     class="bi bi-x-lg"></i>
                                 Cancelar</a>
                             <x-primary-button><i class="bi bi-box-arrow-up"></i> Guardar Calificaciones
