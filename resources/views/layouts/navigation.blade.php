@@ -18,37 +18,38 @@
 
     @if (Auth::user()->role->nombre !== 'Profesor')
         <!-- Usuarios -->
-        <div class="sidebar-heading pb-1">
-            Usuarios
-        </div>
         @if (Auth::user()->role->nombre === 'Administrador')
+            <div class="sidebar-heading pb-1">
+                Usuarios
+            </div>
             <li class="nav-item {{ request()->routeIs('roles.index') ? 'active' : '' }}">
                 <a class="nav-link pt-1" href="{{ route('roles.index') }}">
                     <i class="bi bi-person-circle"></i>
                     <span>Roles</span>
                 </a>
             </li>
-        @endif
-        <li class="nav-item {{ request()->routeIs('usuarios.index') ? 'active' : '' }}">
-            <a class="nav-link pt-0" data-bs-toggle="collapse" href="#collapseUsuarios" aria-expanded="true"
-                aria-controls="collapseUsuarios">
-                <i class="bi bi-people-fill"></i>
-                <span>Usuarios</span>
-            </a>
-            <div id="collapseUsuarios" class="collapse" data-parent="#sidebarNav">
-                <div class="card card-body py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Según rol:</h6>
-                    <a class="collapse-item border-bottom-primary mb-1"
-                        href="{{ route('usuarios.index', ['rol' => 'administrador']) }}">Administrador</a>
-                    <a class="collapse-item border-bottom-primary mb-1"
-                        href="{{ route('usuarios.index', ['rol' => 'secretaria']) }}">Secretaria</a>
-                    <a class="collapse-item border-bottom-primary"
-                        href="{{ route('usuarios.index', ['rol' => 'profesor']) }}">Profesor</a>
+            <li class="nav-item {{ request()->routeIs('usuarios.index') ? 'active' : '' }}">
+                <a class="nav-link pt-0" data-bs-toggle="collapse" href="#collapseUsuarios" aria-expanded="true"
+                    aria-controls="collapseUsuarios">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Usuarios</span>
+                </a>
+                <div id="collapseUsuarios" class="collapse" data-parent="#sidebarNav">
+                    <div class="card card-body py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Según rol:</h6>
+                        <a class="collapse-item border-bottom-primary mb-1"
+                            href="{{ route('usuarios.index', ['rol' => 'administrador']) }}">Administrador</a>
+                        <a class="collapse-item border-bottom-primary mb-1"
+                            href="{{ route('usuarios.index', ['rol' => 'secretaria']) }}">Secretaria</a>
+                        <a class="collapse-item border-bottom-primary"
+                            href="{{ route('usuarios.index', ['rol' => 'profesor']) }}">Profesor</a>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
 
-        <hr class="sidebar-divider">
+            <hr class="sidebar-divider">
+        @endif
+
 
         <!-- Grados -->
         <div class="sidebar-heading">

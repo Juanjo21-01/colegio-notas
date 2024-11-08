@@ -24,8 +24,7 @@
         </div>
     @endif
 
-    @if (Auth::user()->role->nombre !== 'Profesor')
-        {{-- Contenido --}}
+    @if (Auth::user()->role->nombre === 'Administrador')
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between align-content-center">
                 <h6 class="m-0 p-2 font-weight-bold text-primary">Información de los usuarios</h6>

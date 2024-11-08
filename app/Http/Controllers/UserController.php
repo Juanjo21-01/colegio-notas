@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // Validar si el usuario tiene permisos
-        if (Auth::user()->role->nombre === 'Profesor') {
+        if (Auth::user()->role->nombre !== 'Administrador') {
             return redirect()->route('dashboard');
         }
 
@@ -64,7 +64,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         // Validar si el usuario tiene permisos
-        if (Auth::user()->role->nombre === 'Profesor') {
+        if (Auth::user()->role->nombre !== 'Administrador') {
             return redirect()->route('dashboard');
         }
 
@@ -76,7 +76,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         // Validar si el usuario tiene permisos
-        if (Auth::user()->role->nombre === 'Profesor') {
+        if (Auth::user()->role->nombre !== 'Administrador') {
             return redirect()->route('dashboard');
         }
 
@@ -89,7 +89,7 @@ class UserController extends Controller
     public function update(UpdateUsuarioRequest $request, string $id)
     {
         // Validar si el usuario tiene permisos
-        if (Auth::user()->role->nombre === 'Profesor') {
+        if (Auth::user()->role->nombre !== 'Administrador') {
             return redirect()->route('dashboard');
         }
 
@@ -126,7 +126,7 @@ class UserController extends Controller
     public function cambiarEstado(string $id)
     {
         // Validar si el usuario tiene permisos
-        if (Auth::user()->role->nombre === 'Profesor') {
+        if (Auth::user()->role->nombre !== 'Administrador') {
             return redirect()->route('dashboard');
         }
 
