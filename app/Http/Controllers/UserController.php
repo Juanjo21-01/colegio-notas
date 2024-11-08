@@ -7,12 +7,18 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\Usuario\StoreUsuarioRequest;
 use App\Http\Requests\Usuario\UpdateUsuarioRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     // Vista de usuarios
     public function index(Request $request)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $rol = $request->rol;
         // si no se envía el parámetro rol, se mostrarán todos los usuarios
         $usuarios = User::when($rol, function ($query, $rol) {
@@ -26,6 +32,11 @@ class UserController extends Controller
     // Crear usuario
     public function create()
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre !== 'Administrador') {
+            return redirect()->route('dashboard');
+        }
+
         $usuario = new User();
         $roles = Role::all()->except(1);
         return view('usuario.crear', compact('usuario', 'roles'));
@@ -34,6 +45,11 @@ class UserController extends Controller
     // Almacenar usuario
     public function store(StoreUsuarioRequest $request)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre !== 'Administrador') {
+            return redirect()->route('dashboard');
+        }
+        
         try {
             // Crear usuario
             User::create($request->all());
@@ -47,6 +63,11 @@ class UserController extends Controller
     // Ver un usuario
     public function show(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $usuario = User::find($id);
         return view('usuario.mostrar', compact('usuario'));
     }
@@ -54,6 +75,11 @@ class UserController extends Controller
     // Editar usuario
     public function edit(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $usuario = User::find($id);
         $roles = Role::all()->except(1);
         return view('usuario.editar', compact('usuario', 'roles'));
@@ -62,6 +88,11 @@ class UserController extends Controller
     // Actualizar usuario
     public function update(UpdateUsuarioRequest $request, string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Actualizar usuario
             $usuario = User::find($id);
@@ -76,6 +107,11 @@ class UserController extends Controller
     // Eliminar usuario
     public function destroy(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre !== 'Administrador') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Eliminar usuario
             User::destroy($id);
@@ -89,6 +125,11 @@ class UserController extends Controller
     // Cambiar estado de usuario
     public function cambiarEstado(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Cambiar estado de usuario
             $usuario = User::find($id);

@@ -11,6 +11,7 @@ use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use App\Http\Requests\Calificaciones\StoreCalificacionesRequest;
 use App\Http\Requests\Calificaciones\UpdateCalificacionesRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CalificacionController extends Controller
 {
@@ -45,8 +46,12 @@ class CalificacionController extends Controller
     // Vista de calificaciones por grados y estudiantes
     public function inicioEstudiantes(Request $request)
     {
-        $grado = $request->grado;
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
 
+        $grado = $request->grado;
 
         // Obtener los grados filtrados por el parámetro 'grado' si está presente, de lo contrario obtener todos los grados
         $grados = Grado::where('estado', 1)
@@ -157,6 +162,11 @@ class CalificacionController extends Controller
 
     // Mostrar calificaciones por grado y estudiantes
     public function notasEstudiantes(string $id){
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $grado = Grado::find($id);
 
         // Buscar los estudiantes asignados al grado que estén activos
@@ -169,6 +179,11 @@ class CalificacionController extends Controller
     // Mostrar calificaciones por estudiante
     public function notaEstudiante(string $idGrado, string $idEstudiante)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         // Buscar el grado y el estudiante
         $grado = Grado::find($idGrado);
         $estudiante = Estudiante::find($idEstudiante);
@@ -287,5 +302,4 @@ class CalificacionController extends Controller
         $gradoCurso = AsignacionGradoCurso::find($gradoCursoId);
         return redirect()->route('calificaciones.cursos.index', ['grado' => $gradoCurso->grado->nombre])->with('success', 'Calificaciones de: ' . $gradoCurso->grado->nombre . ' "'.$gradoCurso->grado->seccion.'" - ' . $gradoCurso->curso->nombre . ' - Unidad ' . $unidad . ' actualizadas correctamente.');
     }
-
 }

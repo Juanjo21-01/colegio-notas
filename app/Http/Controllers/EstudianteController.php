@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Estudiante;
 use App\Http\Requests\Estudiante\StoreEstudianteRequest;
 use App\Http\Requests\Estudiante\UpdateEstudianteRequest;
+use Illuminate\Support\Facades\Auth;
 
 class EstudianteController extends Controller
 {
     // Vista de estudiantes
     public function index()
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $estudiantes = Estudiante::all();
         foreach ($estudiantes as $estudiante) {
             $fechaNacimiento = $estudiante->fecha_nacimiento;
@@ -27,6 +33,11 @@ class EstudianteController extends Controller
     // Crear estudiante
     public function create()
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $estudiante = new Estudiante();
         return view('estudiante.crear', compact('estudiante'));
     }
@@ -34,6 +45,11 @@ class EstudianteController extends Controller
     // Almacenar estudiante
     public function store(StoreEstudianteRequest $request)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Crear estudiante
             $request->merge(['user_id' => auth()->id()]);
@@ -48,6 +64,11 @@ class EstudianteController extends Controller
     // Ver un estudiante
     public function show(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $estudiante = Estudiante::find($id);
         return view('estudiante.mostrar', compact('estudiante'));
     }
@@ -55,6 +76,11 @@ class EstudianteController extends Controller
     // Editar estudiante
     public function edit(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $estudiante = Estudiante::find($id);
         return view('estudiante.editar', compact('estudiante'));
     }
@@ -62,6 +88,11 @@ class EstudianteController extends Controller
     // Actualizar estudiante
     public function update(UpdateEstudianteRequest $request, string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Actualizar estudiante
             $estudiante = Estudiante::find($id);
@@ -76,6 +107,11 @@ class EstudianteController extends Controller
     // Eliminar estudiante
     public function destroy(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre !== 'Administrador') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Eliminar estudiante
             Estudiante::destroy($id);
@@ -89,6 +125,11 @@ class EstudianteController extends Controller
     // Cambiar estado de estudiante
     public function cambiarEstado(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+        
         try {
             // Cambiar estado de estudiante entre estudiando, retirado, graduado y repitiendo
             $estudiante = Estudiante::find($id);

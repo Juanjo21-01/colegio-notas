@@ -6,12 +6,18 @@ use App\Models\Curso;
 use Illuminate\Http\Request;
 use App\Http\Requests\Curso\StoreCursoRequest;
 use App\Http\Requests\Curso\UpdateCursoRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CursoController extends Controller
 {
     // Vista de cursos
     public function index()
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $cursos = Curso::all();
         return view('curso.index', compact('cursos'));
     
@@ -20,6 +26,11 @@ class CursoController extends Controller
     // Crear un nuevo curso
     public function create()
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $curso = new Curso();
         return view('curso.crear', compact('curso'));
     }
@@ -27,6 +38,11 @@ class CursoController extends Controller
     // Almacenar un nuevo curso
     public function store(StoreCursoRequest $request)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Crear curso
             $request->merge(['user_id' => auth()->user()->id]);
@@ -42,6 +58,11 @@ class CursoController extends Controller
     // Mostrar un curso
     public function show(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $curso = Curso::find($id);
         return view('curso.mostrar', compact('curso'));
     }
@@ -49,6 +70,11 @@ class CursoController extends Controller
     // Editar un curso
     public function edit(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $curso = Curso::find($id);
         return view('curso.editar', compact('curso'));
     }
@@ -56,6 +82,11 @@ class CursoController extends Controller
     // Actualizar un curso
     public function update(UpdateCursoRequest $request, string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Actualizar curso
             $curso = Curso::find($id);
@@ -70,6 +101,11 @@ class CursoController extends Controller
     // Eliminar un curso
     public function destroy(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre !== 'Administrador') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Eliminar curso
             Curso::destroy($id);
@@ -83,6 +119,11 @@ class CursoController extends Controller
     // Cambiar el estado de un curso
     public function cambiarEstado(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+        
         try {
             // Cambiar estado de curso
             $curso = Curso::find($id);

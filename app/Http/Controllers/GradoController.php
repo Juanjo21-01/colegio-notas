@@ -7,12 +7,18 @@ use App\Models\AsignacionGradoCurso;
 use App\Models\AsignacionGradoEstudiante;
 use App\Models\Calificacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GradoController extends Controller
 {
     // Vista de grados
     public function index()
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $grados = Grado::all();
         return view('grado.index', compact('grados'));
     }
@@ -20,6 +26,11 @@ class GradoController extends Controller
     // Ver grados
     public function show(string $id, Request $request)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         // Obtener grado
         $grado = Grado::find($id);
 
@@ -77,6 +88,11 @@ class GradoController extends Controller
     // Cambiar estado de un grado
     public function cambiarEstado(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+        
         try {
             // Cambiar estado de grado
             $grado = Grado::find($id);

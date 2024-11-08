@@ -8,12 +8,18 @@ use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use App\Http\Requests\Asignacion\StoreGradoEstudianteRequest;
 use App\Http\Requests\Asignacion\UpdateGradoEstudianteRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AsignacionGradoEstudianteController extends Controller
 {
     // Vista de asignación de grados y estudiantes
     public function index(Request $request)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $grado = $request->grado;
 
         // si no se envía el parámetro grado, se mostrarán todos los grados y estudiantes
@@ -29,6 +35,11 @@ class AsignacionGradoEstudianteController extends Controller
     // Crear asignación de grado y estudiante
     public function create()
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $gradoEstudiante = new AsignacionGradoEstudiante();
         // traer todos los grados que estén activos
         $grados = Grado::where('estado', 'activo')->get();
@@ -41,6 +52,11 @@ class AsignacionGradoEstudianteController extends Controller
     // Almacenar asignación de grado y estudiante
     public function store(StoreGradoEstudianteRequest $request)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Crear asignación de grado y estudiante
             $request->merge(['user_id' => auth()->user()->id]);
@@ -55,6 +71,11 @@ class AsignacionGradoEstudianteController extends Controller
     // Ver una asignación de grado y estudiante
     public function show(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $gradoEstudiante = AsignacionGradoEstudiante::find($id);
         return view('grado-estudiante.mostrar', compact('gradoEstudiante'));
     }
@@ -62,6 +83,11 @@ class AsignacionGradoEstudianteController extends Controller
     // Editar una asignación de grado y estudiante
     public function edit(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         $gradoEstudiante = AsignacionGradoEstudiante::find($id);
         // traer todos los grados que estén activos
         $grados = Grado::where('estado', 'activo')->get();
@@ -74,6 +100,11 @@ class AsignacionGradoEstudianteController extends Controller
     // Actualizar una asignación de grado y estudiante
     public function update(UpdateGradoEstudianteRequest $request, string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Actualizar asignación de grado y estudiante
             $gradoEstudiante = AsignacionGradoEstudiante::find($id);
@@ -88,6 +119,11 @@ class AsignacionGradoEstudianteController extends Controller
     // Eliminar una asignación de grado y estudiante
     public function destroy(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre !== 'Administrador') {
+            return redirect()->route('dashboard');
+        }
+
         try {
             // Eliminar asignación de grado y estudiante
             AsignacionGradoEstudiante::destroy($id);
@@ -101,6 +137,11 @@ class AsignacionGradoEstudianteController extends Controller
     // Cambiar estado de una asignación de grado y estudiante
     public function cambiarEstado(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+        
         try {
             // Cambiar estado del grado y estudiante
             $gradoEstudiante = AsignacionGradoEstudiante::find($id);
