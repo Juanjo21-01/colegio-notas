@@ -65,17 +65,67 @@ class PDFController extends Controller
     }
 
     // Calificaciones por grados y todos los cursos y estudiantes de un grado
-    public function calificacionesPorGrado($id)
+    public function calificacionesPorGrado(string $id, Request $request)
     {
-        // Buscamos la asignación de grado
-        $asignacionGrado = AsignacionGradoEstudiante::find($id);
-        $calificaciones = Calificacion::where('asignacion_grado_estudiante_id', $id)->get();
+        // Obtener grado
+        $grado = Grado::find($id);
+
+        // Obtener la unidad para las calificaciones
+        $unidad = $request->get('unidad');
+        if (!$unidad) {
+            return redirect()->route('grados.index')->with('error', 'Debe seleccionar una unidad');
+        }
+
+        // Obtener los cursos del grado
+        $cursos = AsignacionGradoCurso::where('grado_id', $id)->get();
+
+        // Obtener los estudiantes del grado
+        $estudiantes = AsignacionGradoEstudiante::where('grado_id', $id)->get();
+
+        // Obtener las calificaciones de los estudiantes
+        $calificaciones = Calificacion::whereIn('asignacion_grado_curso_id', $cursos->pluck('id'))
+        ->where('unidad', $unidad)
+        ->get();
+
+        // Agrupar las calificaciones por estudiante y curso
+        $calificacionesPorEstudiante = [];
+        foreach ($estudiantes as $asignacion) {
+            $estudianteId = $asignacion->estudiante_id;
+            $calificacionesPorEstudiante[$estudianteId] = [
+                'estudiante' => $asignacion->estudiante,
+                'calificaciones' => [],
+                'totalNotas' => 0,
+                'cantidadNotas' => 0,
+            ];
+
+            foreach ($cursos as $curso) {
+                $calificacion = $calificaciones->where('asignacion_grado_curso_id', $curso->id)
+                    ->where('estudiante_id', $estudianteId)
+                    ->first();
+
+                $nota = $calificacion ? round($calificacion->nota) : '-';
+                $calificacionesPorEstudiante[$estudianteId]['calificaciones'][$curso->curso->nombre] = $nota;
+
+                if (is_numeric($nota)) {
+                    $calificacionesPorEstudiante[$estudianteId]['totalNotas'] += $nota;
+                    $calificacionesPorEstudiante[$estudianteId]['cantidadNotas']++;
+                }
+            }
+
+            // Calcular el promedio
+            $calificacionesPorEstudiante[$estudianteId]['promedio'] = $calificacionesPorEstudiante[$estudianteId]['cantidadNotas'] > 0
+                ? round($calificacionesPorEstudiante[$estudianteId]['totalNotas'] / $calificacionesPorEstudiante[$estudianteId]['cantidadNotas'])
+                : '-';
+        }
         
+        // Nombre del archivo PDF
+        $pdfNombre = 'Calificaciones '. $grado->nombre. ' '. $grado->seccion. ' - '. $unidad. ' unidad.pdf';
+
         // Generamos el PDF
-        $pdf = PDF::loadView('pdf.calificacionGrado', compact('asignacionGrado', 'calificaciones'));
+        $pdf = PDF::loadView('pdf.calificacionGrado', compact('grado', 'unidad', 'cursos', 'calificacionesPorEstudiante', 'pdfNombre'))->setPaper('legal', 'landscape');
 
         // Retornamos el PDF
-        return $pdf->stream('calificacionesPorGrado.pdf');
+        return $pdf->stream($pdfNombre);
     }
 
     // Calificaciones por estudiante y todos los cursos de un estudiante en un grado

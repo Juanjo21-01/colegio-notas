@@ -36,11 +36,11 @@
                     <thead>
                         <tr class="text-center">
                             <th class="px-4 py-2 col-1">No.</th>
-                            <th class="px-4 py-2 col-3">Grado</th>
+                            <th class="px-4 py-2 col-2">Grado</th>
                             <th class="px-4 py-2 col-1">Sección</th>
                             <th class="px-4 py-2 col-2">Estudiantes</th>
-                            <th class="px-4 py-2 col-2">Estado</th>
-                            <th class="px-4 py-2 col-3">Acciones</th>
+                            <th class="px-4 py-2 col-1">Estado</th>
+                            <th class="px-4 py-2 col-5">Calificaciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,12 +51,12 @@
                         @endif
                         @foreach ($grados as $grado)
                             <tr>
-                                <td class="border px-4 py-2 col-1 align-middle">{{ $grado->id }}</td>
-                                <td class="border px-4 py-2 col-3 align-middle">{{ $grado->nombre }} </td>
+                                <td class="border px-4 py-2 col-1 align-middle text-center">{{ $grado->id }}</td>
+                                <td class="border px-4 py-2 col-2 align-middle">{{ $grado->nombre }} </td>
                                 <td class="border px-4 py-2 col-1 align-middle text-center">{{ $grado->seccion }}</td>
                                 <td class="border px-4 py-2 col-2 align-middle text-center">
                                     {{ $grado->asignacionGradoEstudiantes->count() }}</td>
-                                <td class="border px-4 py-2 col-2 text-center align-middle">
+                                <td class="border px-4 py-2 col-1 text-center align-middle">
                                     @if ($grado->estado == 'activo')
                                         <a href="{{ route('grados.cambiar-estado', $grado->id) }}" class="text-white">
                                             <span class="badge badge-success px-3 py-2">Activo </span>
@@ -69,11 +69,21 @@
                                         </a>
                                     @endif
                                 </td>
-                                <td class="border px-4 py-2 col-3 align-middle text-center">
-                                    <a href="#" class="btn btn-info bg-gradient-info"><i class="bi bi-eye"></i>
-                                        Cursos</a>
-                                    <a href="#" class="btn btn-info bg-gradient-info"><i class="bi bi-eye"></i>
-                                        Notas</a>
+                                <td class="border px-4 py-2 col-5 align-middle text-center">
+                                    {{-- <a href="#" class="btn btn-info bg-gradient-info"><i class="bi bi-eye"></i>
+                                        Cursos</a> --}}
+                                    <a href="{{ route('grados.show', ['id' => $grado->id, 'unidad' => 'I']) }}"
+                                        class="btn btn-info bg-gradient-info">
+                                        Unidad I</a>
+                                    <a href="{{ route('grados.show', ['id' => $grado->id, 'unidad' => 'II']) }}"
+                                        class="btn btn-info bg-gradient-info">
+                                        Unidad II</a>
+                                    <a href="{{ route('grados.show', ['id' => $grado->id, 'unidad' => 'III']) }}"
+                                        class="btn btn-info bg-gradient-info">
+                                        Unidad III</a>
+                                    <a href="{{ route('grados.show', ['id' => $grado->id, 'unidad' => 'IV']) }}"
+                                        class="btn btn-info bg-gradient-info">
+                                        Unidad IV</a>
                                 </td>
                             </tr>
                         @endforeach

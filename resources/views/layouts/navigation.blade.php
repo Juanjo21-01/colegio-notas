@@ -166,7 +166,7 @@
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Reportes -->
-    <div class="sidebar-heading">
+    {{-- <div class="sidebar-heading">
         Reportes
     </div>
     <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -174,9 +174,9 @@
             <i class="bi bi-bar-chart-fill"></i>
             <span>Reporte</span>
         </a>
-    </li>
+    </li> --}}
 
-    <hr class="sidebar-divider d-none d-md-block">
+    {{-- <hr class="sidebar-divider d-none d-md-block"> --}}
 
     {{-- <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0">

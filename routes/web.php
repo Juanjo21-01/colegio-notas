@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('usuarios/cambiar-estado/{id}', [UserController::class, 'cambiarEstado'])->name('usuarios.cambiar-estado');
     // Grados
     Route::get('grados', [GradoController::class, 'index'])->name('grados.index');
+    Route::get('grados/{id}', [GradoController::class, 'show'])->name('grados.show');
     Route::get('grados/cambiar-estado/{id}', [GradoController::class, 'cambiarEstado'])->name('grados.cambiar-estado');
     // Cursos
     Route::resource('cursos', CursoController::class)->names('cursos');
