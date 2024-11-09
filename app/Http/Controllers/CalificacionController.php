@@ -228,6 +228,11 @@ class CalificacionController extends Controller
     // Editar calificaciones
     public function edit(string $id)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+
         // Buscar las calificaciones del grado y curso
         $gradoCurso = AsignacionGradoCurso::find($id);
 
@@ -266,6 +271,11 @@ class CalificacionController extends Controller
     // Actualizar calificaciones
     public function update(UpdateCalificacionesRequest $request)
     {
+        // Validar si el usuario tiene permisos
+        if (Auth::user()->role->nombre === 'Profesor') {
+            return redirect()->route('dashboard');
+        }
+        
         // Recibir los datos del formulario
         $unidad = $request->unidad;
         $gradoCursoId = $request->grado_curso_id;

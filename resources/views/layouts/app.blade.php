@@ -8,6 +8,9 @@
 
     <title>Instituto @yield('title', ' ')</title>
 
+    <!-- Icon -->
+    <link rel="icon" href="{{ asset('img/logotipo.png') }}" type="image/png">
+
     <!-- Fonts -->
 
     <!-- Scripts -->

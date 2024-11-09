@@ -2,7 +2,7 @@
     @section('title', '- Inicio')
 
     <x-slot name="header">
-        <ol class="breadcrumb bg-light mb-0 p-2">
+        <ol class="breadcrumb bg-white mb-0">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Inicio</a></li>
         </ol>
     </x-slot>

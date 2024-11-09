@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Instituto {{ $metaTitle ?? '' }}</title>
+    <title>Instituto Raquel Adolfo Barrios {{ $metaTitle ?? '' }}</title>
+
+    <!-- Icon -->
+    <link rel="icon" href="{{ asset('img/logotipo.png') }}" type="image/png">
 
     <!-- Fonts -->
 
@@ -21,13 +24,13 @@
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block p-0">
+                            <div class="col-lg-7 d-none d-lg-block">
                                 <img src="/img/fondo-login.png" alt="Fondo de la página" class="img-fluid" />
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-5">
                                 <div class="d-flex justify-content-center pt-2">
                                     <img src="/img/logotipo.png" alt="Fondo de la página" class="img-fluid"
-                                        Width="50" />
+                                        Width="100" />
                                 </div>
                                 <div class="px-5 pb-2">
                                     {{ $slot }}

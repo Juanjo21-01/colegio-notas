@@ -79,15 +79,17 @@
                                                             <div
                                                                 class="d-flex justify-content-center align-items-center">
                                                                 <a href="{{ route('calificaciones.cursos.create', ['gradoCurso' => $gradoCurso->id]) }}"
-                                                                    class="btn btn-success mr-1"> <i
+                                                                    class="btn btn-success mr-1 mb-2"> <i
                                                                         class="bi bi-plus-lg"></i>
                                                                     Ingresar
                                                                 </a>
-                                                                <a href="{{ route('calificaciones.cursos.edit', $gradoCurso->id) }}"
-                                                                    class="btn btn-secondary m-1"> <i
-                                                                        class="bi bi-pencil"></i>
-                                                                    Editar
-                                                                </a>
+                                                                @if (Auth::user()->role->nombre !== 'Profesor')
+                                                                    <a href="{{ route('calificaciones.cursos.edit', $gradoCurso->id) }}"
+                                                                        class="btn btn-secondary mb-2"> <i
+                                                                            class="bi bi-pencil"></i>
+                                                                        Editar
+                                                                    </a>
+                                                                @endif
                                                             </div>
                                                             <a href="{{ route('calificaciones.cursos.show', $gradoCurso->id) }}"
                                                                 class="btn btn-primary "> <i class="bi bi-eye"></i>

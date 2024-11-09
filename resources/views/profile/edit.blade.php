@@ -2,27 +2,39 @@
     @section('title', '- Perfil')
 
     <x-slot name="header">
-        <ol class="breadcrumb bg-white mb-0">
+        <ol class="breadcrumb bg-light mb-0 p-2">
             <li class="breadcrumb-item"><a href="{{ route('profile.edit') }}">Perfil</a></li>
         </ol>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+    <div class="py-4">
+        <div class="container">
+            <!-- Formulario de actualización de información de perfil -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Actualizar Información de Perfil</h5>
+                </div>
+                <div class="card-body">
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+            <!-- Formulario de actualización de contraseña -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Actualizar Contraseña</h5>
+                </div>
+                <div class="card-body">
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+            <!-- Formulario de eliminación de usuario -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0 text-danger">Eliminar Cuenta</h5>
+                </div>
+                <div class="card-body">
                     @include('profile.partials.delete-user-form')
                 </div>
             </div>
